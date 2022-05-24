@@ -1,0 +1,128 @@
+
+<robot name="imu_lidar_2d">
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 0.3" />
+  </material>
+
+  <material name="blue">
+    <color rgba="0.2 0.2 1.0 0.3" />
+  </material>
+
+  <material name="gray">
+    <color rgba="0.2 0.2 0.2 0.5" />
+  </material>
+
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1" />
+  </material>
+
+
+  <link name="imu">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="0.06 0.04 0.02" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="cloud_b">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder length="0.2" radius="0.1" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+
+  <link name="cloud_f">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder length="0.2" radius="0.1" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+  </link>
+
+  <link name="rotor">
+    <visual>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder length="1.2" radius="0.06" />
+      </geometry>
+      <material name="black" />
+    </visual>
+  </link>
+
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="2.275 0 -0.3" />
+      <geometry>
+        <!--cylinder length="0.05" radius="0.1" /-->
+        <box size="4.55 2.55 0.3" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="back_link">
+    <visual>
+      <origin xyz="2.23 0 -0.3" />
+      <geometry>
+        <!--cylinder length="0.05" radius="0.1" /-->
+        <box size="4.46 2.25 0.3" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+  </link>
+
+  <joint name="lidar2back" type="fixed">
+    <parent link="back_link" />
+    <child link="cloud_b" />
+    <origin xyz="2.15 0.07 0" rpy="3.14 0 0"/>
+  </joint>
+
+  <joint name="lidar2base" type="fixed">
+    <parent link="base_link" />
+    <child link="cloud_f" />
+    <origin xyz="0.5 0 0"  rpy="3.14 0 0"/>
+  </joint>
+
+  <joint name="imu2back" type="fixed">
+    <parent link="back_link" />
+    <child link="imu" />
+    <origin xyz=" 2.15 0.07 0"  rpy="0 0 0"/>
+  </joint>
+
+  <!--joint name="imu2lidar" type="fixed">
+    <parent link="cloud_b" />
+    <child link="imu" />
+    <origin xyz="-0.015 0 -0.19"/>
+  </joint/-->
+
+  <joint name="rotor2base" type="fixed">
+    <parent link="back_link" />
+    <child link="rotor" />
+    <origin xyz="0 0 0" />
+  </joint>
+
+  <joint name="base2back" type="fixed">
+    <parent link="back_link" />
+    	<child link="base_link" />
+        <!-- revolute around x-axis -->
+        <!--axis xyz="1 0 0" />    
+        <! revolute around y-axis -->
+        <!--axis xyz="0 1 0" /-->
+        <!-- revolute around z-axis -->
+        <!--axis xyz="0 0 1" /-->
+        <!-- revolute around x+y+z-axis -->
+        <axis xyz="1 1 1" />
+    <origin xyz="-2.275 0 -0.3" />
+    <!--limit effort="30" velocity="1.0" lower="-1.57" upper="1.57" /-->
+  </joint>
+
+</robot>
